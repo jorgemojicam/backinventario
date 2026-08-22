@@ -76,7 +76,7 @@ async function findById(id) {
   if (!venta) return null;
 
   const [items] = await pool.query(
-    `SELECT vd.*, p.name AS producto_nombre
+    `SELECT vd.*, p.name AS product_name
      FROM venta_detalle vd
      INNER JOIN product p ON p.id = vd.product_id
      WHERE vd.venta_id = ?`,
