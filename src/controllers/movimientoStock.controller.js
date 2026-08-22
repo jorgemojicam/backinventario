@@ -10,7 +10,7 @@ async function registrar(req, res) {
     cantidad,
     motivo,
     nota,
-    usuario_id: req.usuario.id, // viene del JWT, puesto por el middleware `autenticar`
+    user_id: req.usuario.id, // viene del JWT, puesto por el middleware `autenticar`
   });
   res.status(201).json({ success: true, data: resultado });
 }

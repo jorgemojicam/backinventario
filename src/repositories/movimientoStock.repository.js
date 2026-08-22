@@ -27,7 +27,7 @@ async function registrarMovimiento(connection, { producto_id, tipo, cantidad, mo
     'SELECT stock FROM product WHERE id = ? FOR UPDATE',
     [producto_id]
   );
-
+  
   if (!rows[0]) {
     const err = new Error('Producto no encontrado');
     err.statusCode = 404;
