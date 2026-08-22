@@ -35,7 +35,7 @@ async function count({ search = '' } = {}) {
 }
 
 async function findById(id) {
-  const [rows] = await pool.query('SELECT * FROM product WHERE id = ?', [id]);
+  const [rows] = await pool.query('SELECT * FROM product WHERE id = ?', [id]);  
   return rows[0] || null;
 }
 

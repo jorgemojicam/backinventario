@@ -3,6 +3,7 @@ const usuarioRoutes = require('./usuario.routes');
 const productoRoutes = require('./producto.routes');
 const authRoutes = require('./auth.routes');
 const perfilRoutes = require('./perfil.routes');
+const ventaRoutes = require('./venta.routes');
 const { autenticar } = require('../middlewares/auth.middleware');
 
 const router = Router();
@@ -18,5 +19,6 @@ router.use('/auth', authRoutes);
 router.use('/usuarios', autenticar, usuarioRoutes);
 router.use('/productos', autenticar, productoRoutes);
 router.use('/perfiles', autenticar, perfilRoutes);
+router.use('/ventas', autenticar, ventaRoutes);
 
 module.exports = router;

@@ -22,12 +22,12 @@ async function countByProductoId(productoId) {
 // Registra el movimiento y actualiza product.stock de forma atómica.
 // Usa SELECT ... FOR UPDATE para bloquear la fila del producto y evitar condiciones de carrera
 // si dos movimientos llegan al mismo tiempo (ej. dos ventas simultáneas del mismo producto).
-async function registrarMovimiento(connection, { producto_id, tipo, cantidad, motivo, usuario_id, nota }) {
+async function registrarMovimiento(connection, { product_id, tipo, cantidad, motivo, usuario_id, nota }) {
   const [rows] = await connection.query(
     'SELECT stock FROM product WHERE id = ? FOR UPDATE',
-    [producto_id]
+    [product_id]
   );
-
+  
   if (!rows[0]) {
     const err = new Error('Producto no encontrado');
     err.statusCode = 404;
@@ -46,14 +46,14 @@ async function registrarMovimiento(connection, { producto_id, tipo, cantidad, mo
 
   await connection.query('UPDATE product SET stock = ? WHERE id = ?', [
     stockResultante,
-    producto_id,
+    product_id,
   ]);
 
   const [result] = await connection.query(
     `INSERT INTO movimientos_stock
       (product_id, tipo, cantidad, motivo, stock_resultante, user_id, nota)
      VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [producto_id, tipo, cantidad, motivo, stockResultante, usuario_id || null, nota || null]
+    [product_id, tipo, cantidad, motivo, stockResultante, usuario_id || null, nota || null]
   );
 
   return { id: result.insertId, stock_resultante: stockResultante };

@@ -17,16 +17,16 @@ function validar({ tipo, cantidad, motivo }) {
 }
 
 // Registra un movimiento (entrada/salida) y actualiza productos.stock en una sola transacción.
-async function registrar({ producto_id, tipo, cantidad, motivo, usuario_id, nota }) {
+async function registrar({ product_id, tipo, cantidad, motivo, usuario_id, nota }) {
   validar({ tipo, cantidad, motivo });
-  const producto = await productoRepository.findById(producto_id);  
+  const producto = await productoRepository.findById(product_id);    
   if (!producto) throw ApiError.notFound('Producto no encontrado');
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
  
     const resultado = await movimientoRepository.registrarMovimiento(connection, {
-      producto_id,
+      product_id,
       tipo,
       cantidad: Number(cantidad),
       motivo: motivo.trim(),
