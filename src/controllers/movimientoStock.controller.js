@@ -5,7 +5,7 @@ async function registrar(req, res) {
   const { tipo, cantidad, motivo, nota } = req.body; // se ignora cualquier usuario_id que venga en el body
 
   const resultado = await movimientoService.registrar({
-    producto_id: productoId,
+    product_id: productoId,
     tipo,
     cantidad,
     motivo,
